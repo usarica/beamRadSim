@@ -1,0 +1,45 @@
+#quick way to get the muon sim to run
+
+/vis/scene/create
+/vis/open OGLIX 800x800-0+0
+/vis/verbose errors
+/vis/viewer/set/style surface
+/vis/viewer/set/autoRefresh false
+/vis/viewer/set/viewpointVector 0 0 1
+
+/run/initialize
+/vis/drawVolume
+/vis/viewer/flush
+/gps/particle mu-
+/gps/pos/type Volume
+/gps/pos/shape Para
+/gps/pos/centre 10 10 10 cm
+/gps/pos/halfx 2. cm
+/gps/pos/halfy 3. cm
+/gps/pos/halfz 4. cm
+/gps/pos/paralp 0.523599
+/gps/pos/parthe 0.523599
+/gps/pos/parphi 0.523599
+/gps/ang/type cos
+/gps/ene/type Mono
+/gps/ene/mono 4 GeV
+/gps/number 10
+/vis/scene/endOfEventAction accumulate 1
+/tracking/storeTrajectory 1
+/vis/scene/add/trajectories
+
+/vis/modeling/trajectories/create/drawByParticleID
+/vis/modeling/trajectories/drawByParticleID-0/set gamma green
+/vis/modeling/trajectories/drawByParticleID-0/set neutron magenta
+/vis/modeling/trajectories/drawByParticleID-0/set e+ blue
+/vis/modeling/trajectories/drawByParticleID-0/set e- black
+/vis/modeling/trajectories/drawByParticleID-0/set opticalphoton cyan
+/vis/modeling/trajectories/drawByParticleID-0/set mu- red
+/vis/modeling/trajectories/drawByParticleID-0/set proton yellow
+#/vis/modeling/trajectories/list
+/vis/viewer/set/background white
+
+/vis/viewer/flush
+/run/beamOn 1
+
+

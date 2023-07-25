@@ -1,0 +1,39 @@
+#quick way to get the muon sim to run
+/run/initialize
+
+/gps/position 30 0 0 mm
+/gps/pos/type Plane
+/gps/pos/shape Rectangle
+/gps/pos/halfx 0.1 cm
+/gps/pos/halfy 0.1 cm
+#/gps/pos/halfz 1 cm
+/gps/pos/rot1 0 1 0
+/gps/pos/rot2 0 0 1
+/gps/ang/type iso
+#/gps/hist/type theta
+# 90-degree muon cos^2 zenith angle distribution
+
+#/gps/hist/file /home/schmitz/sim/HannahTestStand/MuonAngDistDeg30.dat
+
+
+#######################################
+#/gps/position 10 0 9 cm
+#/gps/pos/type Plane
+#/gps/pos/shape Rectangle
+#/gps/pos/halfx 2 cm
+#/gps/pos/halfy 0.5 cm
+#/gps/pos/rot1 0 1 0
+#/gps/pos/rot2 0 0 1
+#/gps/direction -1 0 0
+#####################################
+/gps/particle mu-
+/gps/ene/type Mono
+/gps/ene/mono 4 GeV
+
+/run/fname /media/ryan/Storage/computing/mqFullSim/data/R97/iso/
+/run/beamOn 1
+
+/gps/position -1000 0 0 mm
+/run/beamOn 20000
+
+

@@ -1,0 +1,32 @@
+{ decls }
+namespace std {  }
+
+[ libBeamRadDict.so ]
+# List of selected classes
+class brGammaTrack
+class brMuonTrack
+class brNeutronTrack
+class brPMTRHit
+class brPhotonTrack
+class brROOTEvent
+class brScintRHit
+class vector<brGammaTrack*>
+class vector<brMuonTrack*>
+class vector<brNeutronTrack*>
+class vector<brPMTRHit*>
+class vector<brPhotonTrack*>
+class vector<brScintRHit*>
+header brGammaTrack.hh
+header brMuonTrack.hh
+header brNeutronTrack.hh
+header brPMTRHit.hh
+header brPhotonTrack.hh
+header brROOTEvent.hh
+header brScintRHit.hh
+# List of selected typedefs and outer classes
+typedef brGammaTrackVector
+typedef brNeutronTrackVector
+typedef brMuonTrackVector
+typedef brPhotonTrackVector
+typedef brPMTRHitVector
+typedef brScintRHitVector

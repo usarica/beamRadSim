@@ -1,0 +1,62 @@
+#quick way to get the muon sim to run
+
+/run/initialize
+
+/gps/particle gamma
+/gps/pos/type Plane
+/gps/pos/shape Rectangle
+/gps/pos/centre 30 0 0 mm
+/gps/pos/halfx 25 mm
+/gps/pos/halfy 25 mm
+/gps/pos/rot1 0 1 0
+/gps/pos/rot2 0 0 1
+
+#/gps/ene/type Mono
+#/gps/ene/mono 500 keV
+
+/gps/ene/type Arb
+/gps/hist/type arb
+#/gps/hist/point 0.0168649885583524 0.000172084377388868
+#/gps/hist/point 0.0169565217391304 0.0978350106405339
+#/gps/hist/point 0.0175514874141876 0.0991283137678452
+#/gps/hist/point 0.0176430205949656 0.306684632864873
+#/gps/hist/point 0.0201144164759725 0.255178515420846
+#/gps/hist/point 0.0202517162471395 0.425870508778875
+#/gps/hist/point 0.0207551487414187 0.425870508778875
+#/gps/hist/point 0.0208466819221967 1
+/gps/hist/point 0.02 0
+/gps/hist/point 0.0208466819221967 1
+/gps/hist/point 0.0234096109839816 0.854198757472074
+/gps/hist/point 0.0259725400457665 0.683283227807523
+/gps/hist/point 0.0290846681922196 0.546565966432387
+/gps/hist/point 0.0324713958810068 0.431500187328789
+/gps/hist/point 0.0371395881006864 0.298734355662169
+/gps/hist/point 0.0426315789473684 0.191147587585186
+/gps/hist/point 0.0462471395881006 0.141315602368966
+/gps/hist/point 0.0481693363844393 0.110109577206377
+/gps/hist/point 0.0509610983981693 0.0846752824507955
+/gps/hist/point 0.052883295194508 0.0634280513070246
+/gps/hist/point 0.0547139588100686 0.0462806275856545
+/gps/hist/point 0.0561784897025171 0.0337689152604443
+/gps/hist/point 0.0574599542334096 0.0210471800530237
+/gps/hist/point 0.0585583524027459 0.0138256134614413
+/gps/hist/point 0.0591075514874141 0.00957168930703343
+/gps/hist/point 0.0598398169336384 0.00413018572903788
+/gps/hist/point 0.0600228832951945 0.00016983923414997
+/gps/hist/inter Lin
+
+
+#/gps/hist/point 0 8.83
+#/gps/hist/point 0.0599 8.83
+#/gps/hist/point 0.0601 0.5
+#/gps/hist/point 0.995 0.5
+#/gps/hist/point 1.00 0
+
+/gps/direction -1 0 0
+#/gps/number 10
+
+
+#/run/fname /media/ryan/Storage/computing/beamRadSim/data/60keV1MeVMixed_mixedAbsAuAgScint_5stack/
+/run/fname /media/ryan/Storage/computing/beamRadSim/data/eBremData/gammaDepositPreSteel3cm/
+/run/beamOn 60000000
+#/run/beamOn 1000

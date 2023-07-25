@@ -1,0 +1,29 @@
+#quick way to get the muon sim to visualize
+#/vis/viewer/zoomTo 3.5
+/vis/viewer/set/timeWindow/fadeFactor 1
+
+        /vis/viewer/set/timeWindow/startTime 0 ns 0.0001 ns
+        /vis/viewer/save
+        /vis/viewer/set/timeWindow/startTime 0.005 ns 0.0001 ns
+        /vis/viewer/save
+        /vis/viewer/set/timeWindow/startTime 0.01 ns 0.0001 ns
+        /vis/viewer/save
+        /vis/viewer/set/timeWindow/startTime 0.015 ns 0.0001 ns
+        /vis/viewer/save
+        /vis/viewer/set/timeWindow/startTime 0.02 ns 0.0001 ns
+        /vis/viewer/save
+        /vis/viewer/set/timeWindow/startTime 0.03 ns 0.0002 ns
+        /vis/viewer/save
+        /vis/viewer/set/timeWindow/startTime 0.04 ns 0.0002 ns
+        /vis/viewer/save
+        /vis/viewer/set/timeWindow/startTime 0.05 ns 0.0002 ns
+        /vis/viewer/save
+        # Then another view, the next time window, and a save...
+        # ...repeat a few more times
+        # Then try
+        /vis/viewer/interpolate
+
+#/vis/viewer/zoomTo 3
+#/vis/viewer/panTo -1
+
+

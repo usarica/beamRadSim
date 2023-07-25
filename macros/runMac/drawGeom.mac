@@ -1,0 +1,38 @@
+#Setting display settings
+#/control/verbose 1
+#/run/verbose 1
+#
+# create empty scene
+#
+/vis/scene/create
+#/vis/scene/add/volume waterTank_physic
+#/vis/scene/add/userAction
+#/vis/scene/add/axes
+#/vis/scene/add/scale 10 mm z
+#/vis/open DAWNFILE
+/vis/open VRML2FILE
+#/vis/open HepRepFile
+#/vis/open OGL
+#/vis/open OGLSQt  
+#/vis/open OGLIX 600x600-0+0
+#/vis/open RayTracer
+
+#/vis/open ATree
+#/vis/ASCIITree/verbose 14
+/run/initialize
+/vis/viewer/set/autoRefresh false
+#acc. to ApplicationDeveloperHandbook red = x-axis; green = y-axis; blue = z-axis
+/vis/drawVolume
+/vis/viewer/set/viewpointThetaPhi 0 90 deg
+#/vis/viewer/set/style wireframe
+#/vis/viewer/set/style surface
+#/vis/viewer/set/auxiliaryEdge true
+#/vis/viewer/zoom 2
+#/vis/viewer/set/sectionPlane on 1 0 0 cm 1 0 0
+#acc. to ApplicationDeveloperHandbook red = x-axis; green = y-axis; blue = z-axis
+/vis/scene/add/axes 0 0 0 10 mm
+/vis/viewer/set/autoRefresh true
+/vis/viewer/flush
+#/vis/ogl/printEPS
+#exit
+

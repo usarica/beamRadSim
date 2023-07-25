@@ -1,0 +1,158 @@
+# $Id: run2.mac,v 1.2 2002/12/16 16:31:42 maire Exp $
+#
+# Macro file for "detectorNeutrons.cc"
+# 
+# can be run in batch, without graphic
+# or interactively: Idle> /control/execute run2.mac
+#
+
+###################################################
+#Setting verbose level
+/control/verbose 0
+/run/verbose 0
+/tracking/verbose 0
+
+#/optics_engine/selectOpProcess OpBoundary
+#/optics_engine/setOpProcessVerbose 4
+#/optics_engine/selectOpProcess Cerenkov
+#/optics_engine/setOpProcessUse False
+#/optics_engine/selectOpProcess Scintillation 
+#/optics_engine/setOpProcessUse False
+/run/initialize
+###################################################
+#Setting display settings
+#/vis/open HepRepFile
+#/vis/open OGLIX 600x600-0+0
+#/vis/open DAWNFILE
+
+#/vis/drawVolume
+#/vis/viewer/set/viewpointThetaPhi 45 30 deg
+#/vis/viewer/zoom 15
+
+#/vis/modeling/trajectories/create/drawByParticleID
+#/vis/modeling/trajectories/drawByParticleID-0/set gamma red
+#/vis/modeling/trajectories/drawByParticleID-0/set neutron blue
+#/vis/modeling/trajectories/drawByParticleID-0/set e+ green
+#/vis/modeling/trajectories/drawByParticleID-0/set e- green
+#/vis/modeling/trajectories/drawByParticleID-0/set opticalphoton cyan
+#/vis/modeling/trajectories/drawByParticleID-0/set mu- white
+#/vis/modeling/trajectories/drawByParticleID-0/set proton black
+#/vis/modeling/trajectories/list
+
+#/vis/filtering/trajectories/create/attributeFilter
+#/vis/filtering/trajectories/attributeFilter-0/setAttribute IMag
+#/vis/filtering/trajectories/attributeFilter-0/addInterval 5 eV 201 TeV
+#/vis/filtering/trajectories/attributeFilter-0/addInterval 3 eV 3.0003 eV
+#/vis/filtering/trajectories/create/particleFilter
+#/vis/filtering/trajectories/particleFilter-0/add neutron
+#/vis/filtering/trajectories/particleFilter-0/add mu-
+#/vis/filtering/trajectories/particleFilter-0/add opticalphoton
+#/vis/filtering/trajectories/particleFilter-0/add gamma
+#/vis/filtering/trajectories/particleFilter-0/add e-
+#/vis/filtering/trajectories/particleFilter-0/add e+
+
+#acc. to ApplicationDeveloperHandbook red = x-axis; green = y-axis; blue = z-axis
+#/vis/scene/add/axes 0 0 0 1 cm
+#/vis/viewer/flush
+#/vis/scene/add/trajectories 
+#/vis/scene/endOfEventAction accumulate
+
+
+###################################################
+#
+#
+##########################################################################
+#
+# Cf252NeutronVertex.txt
+#
+# This macro file sets G4GPS parameters to produce an isotropic 
+# point source of neutrons with a Cf252 enery spectrum.
+# 
+##########################################################################
+#
+#
+/gps/particle neutron
+#
+/gps/pos/type Point
+#/gps/position 0 21.3 1.875 cm
+#/gps/position 0 11.3 1.875 cm 
+#/gps/position 0 6. 1.875 cm 
+/gps/position 12 0 18.75 mm 
+#
+/gps/ang/type iso
+#/gps/direction 0 0 -1
+#
+/gps/ene/type Arb
+/gps/hist/type arb
+#
+# The Cf-252 neutron energy spectrum was taken from
+# Figure 2 of A.B. Smith and  P.R. Fields, 
+# Phys Rev 108 (1957) 411.
+#
+#                Energy (MeV)  Rel. Yield
+#
+#/gps/hist/point  0.03791	32.71076
+#/gps/hist/point  0.08301	45.89684
+#/gps/hist/point  0.19830	59.07265
+#/gps/hist/point  0.34993	68.10622
+#/gps/hist/point  0.60544	74.34164
+#/gps/hist/point  0.81070	76.17980
+#/gps/hist/point  1.08555	73.89820
+#/gps/hist/point  1.55102	64.25226
+#/gps/hist/point  1.89664	55.40119
+#/gps/hist/point  2.39728	45.95365
+#/gps/hist/point  2.82949	37.80812
+#/gps/hist/point  3.50389	27.66813
+#/gps/hist/point  4.40363	17.72709
+#/gps/hist/point  5.04448	12.47039
+#/gps/hist/point  5.61632	8.97969
+#/gps/hist/point  6.24062	6.12068
+#/gps/hist/point  7.02125	3.73887
+#/gps/hist/point  8.84360	1.12916
+
+# from Mark Pepin  
+ /gps/hist/point  1.0000000E+00   3.2955695E-01
+ /gps/hist/point  2.0000000E+00   2.3298226E-01
+ /gps/hist/point  3.0000000E+00   1.4144214E-01
+ /gps/hist/point  4.0000000E+00   8.0374003E-02
+ /gps/hist/point  5.0000000E+00   4.3944927E-02
+ /gps/hist/point  6.0000000E+00   2.3412127E-02
+ /gps/hist/point  7.0000000E+00   1.2238575E-02
+ /gps/hist/point  8.0000000E+00   6.3043979E-03
+ /gps/hist/point  9.0000000E+00   3.2094125E-03
+ /gps/hist/point  1.0000000E+01   1.6179264E-03
+ /gps/hist/point  1.1000000E+01   8.0890071E-04
+ /gps/hist/point  1.2000000E+01   4.0154420E-04
+ /gps/hist/point  1.3000000E+01   1.9809097E-04
+ /gps/hist/point  1.4000000E+01   9.7185987E-05
+ /gps/hist/point  1.5000000E+01   4.7446862E-05
+ /gps/hist/point  1.6000000E+01   2.3061627E-05
+ /gps/hist/point  1.7000000E+01   1.1164286E-05
+ /gps/hist/point  1.8000000E+01   5.3849768E-06
+ /gps/hist/point  1.9000000E+01   2.5886922E-06
+ /gps/hist/point  2.0000000E+01   1.2406097E-06
+ /gps/hist/point  2.1000000E+01   5.9285462E-07
+ /gps/hist/point  2.2000000E+01   2.8255806E-07
+ /gps/hist/point  2.3000000E+01   1.3433582E-07
+ /gps/hist/point  2.4000000E+01   6.3719196E-08
+ /gps/hist/point  2.5000000E+01   3.0158206E-08
+ /gps/hist/point  2.6000000E+01   1.4244713E-08
+ /gps/hist/point  2.7000000E+01   6.7153041E-09
+ /gps/hist/point  2.8000000E+01   3.1600040E-09
+ /gps/hist/point  2.9000000E+01   1.4844363E-09
+ /gps/hist/point  3.0000000E+01   6.9618697E-10
+
+
+
+
+
+
+#
+# Linear interpolation between the data points is required to obtain
+# the smooth energy spectrum
+/gps/hist/inter Lin
+#start run
+
+
+
+/run/beamOn 100000

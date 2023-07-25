@@ -1,0 +1,43 @@
+#quick way to get the muon sim to run
+
+#/vis/scene/create
+#/vis/open OGLIX 600x600-0+0
+#/vis/verbose errors
+#/vis/viewer/set/style surface
+#/vis/viewer/set/autoRefresh false
+#/vis/viewer/set/upVector 1 0 0
+#/vis/viewer/set/viewpointVector 0 1 0
+
+/run/initialize
+#/vis/drawVolume
+#/vis/viewer/flush
+
+/gps/pos/centre 10 0 4 cm
+/gps/particle mu-
+/gps/ene/type Mono
+/gps/ene/mono 4 GeV
+/gps/direction -1 0 0
+
+#/vis/scene/endOfEventAction accumulate 25
+#/tracking/storeTrajectory 1
+#/vis/scene/add/trajectories
+
+#/vis/modeling/trajectories/create/drawByParticleID
+#/vis/modeling/trajectories/drawByParticleID-0/set gamma green
+#/vis/modeling/trajectories/drawByParticleID-0/set neutron magenta
+#/vis/modeling/trajectories/drawByParticleID-0/set e+ blue
+#/vis/modeling/trajectories/drawByParticleID-0/set e- white
+#/vis/modeling/trajectories/drawByParticleID-0/set opticalphoton cyan
+#/vis/modeling/trajectories/drawByParticleID-0/set mu- red
+#/vis/modeling/trajectories/drawByParticleID-0/set proton yellow
+#/vis/modeling/trajectories/list
+
+#/vis/viewer/flush
+
+/run/fname /data/chocula/schmitz/condor_output/HannahTestStand/data/
+#/run/fname /home/schmitz/sim/data/
+/run/beamOn 100000
+
+
+
+

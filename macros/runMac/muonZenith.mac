@@ -1,0 +1,68 @@
+#===============================================================================
+# Geant4 macro file created by M. Hughes to simulate the LED source(s) embedded
+# in the plexiglass sidewall of the EDELWEISS-II neutron counter.
+#
+
+###################################################
+#Setting verbose level
+#/control/verbose 0
+/run/verbose 1
+/tracking/verbose 0
+#/optics_engine/selectOpProcess OpBoundary
+#/optics_engine/setOpProcessVerbose 4
+#/optics_engine/selectOpProcess Cerenkov 
+#/optics_engine/setOpProcessUse False
+#/optics_engine/selectOpProcess Scintillation
+#/optics_engine/setOpProcessUse False
+/run/initialize
+
+###################################################
+#Setting display settings
+#/vis/open HepRepFile
+#/vis/open OGLIX 600x600-0+0
+#/vis/open DAWNFILE
+
+#/vis/drawVolume
+#/vis/viewer/set/viewpointThetaPhi 45 30 deg
+#/vis/viewer/zoom 15
+
+#/vis/modeling/trajectories/create/drawByParticleID
+#/vis/modeling/trajectories/drawByParticleID-0/set gamma red
+#/vis/modeling/trajectories/drawByParticleID-0/set neutron green
+#/vis/modeling/trajectories/drawByParticleID-0/set e+ blue
+/vis/modeling/trajectories/drawByParticleID-0/set e- blue
+/vis/modeling/trajectories/drawByParticleID-0/set opticalphoton yellow
+/vis/modeling/trajectories/drawByParticleID-0/set mu- red
+/vis/modeling/trajectories/drawByParticleID-0/set proton black
+/vis/modeling/trajectories/list
+
+#acc. to ApplicationDeveloperHandbook red = x-axis; green = y-axis; blue = z-axis
+/vis/scene/add/axes 0 0 0 1 cm
+/vis/viewer/flush
+/vis/scene/add/trajectories 
+/vis/scene/endOfEventAction accumulate
+
+#===============================================================================
+# Set GPS properties
+#/EDELWEISS-II/PGA/UseMuonGenerator false
+#/EDELWEISS-II/PGA/UseGeantinos false
+/physics_engine/tailor/GammaNuclear on
+/physics_engine/tailor/MuonNuclear on
+/gps/particle mu-
+/gps/number 1
+/gps/source/intensity 1.
+/gps/energytype Mono
+/gps/energy 4 GeV
+/gps/pos/centre 0.  100. 22.5 mm #-44.95 0. 0.  mm
+
+#/gps/pos/type Point
+#/gps/ang/type iso
+# Restrict mu's projection to 0.1-degree cone
+#/gps/mintheta 0 deg
+#/gps/maxtheta 0.01 deg
+
+###################################################
+# Start run
+
+/run/initialize
+/run/beamOn 10

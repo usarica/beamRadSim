@@ -1,0 +1,142 @@
+#quick way to get the muon sim to run
+/run/initialize
+
+/gps/position 30 0 0 mm
+/gps/pos/type Plane
+/gps/pos/shape Rectangle
+/gps/pos/halfx 0.1 cm
+/gps/pos/halfy 0.1 cm
+#/gps/pos/halfz 1 cm
+/gps/pos/rot1 0 1 0
+/gps/pos/rot2 0 0 1
+/gps/ang/type user
+/gps/hist/type theta
+# 90-degree muon cos^2 zenith angle distribution
+
+/gps/hist/point 0 1
+/gps/hist/point 0.015707963267949 1
+/gps/hist/point 0.0314159265358979 1
+/gps/hist/point 0.0471238898038469 1
+/gps/hist/point 0.0628318530717959 1
+/gps/hist/point 0.0785398163397448 1
+/gps/hist/point 0.0942477796076938 1
+/gps/hist/point 0.109955742875643 1
+/gps/hist/point 0.125663706143592 1
+/gps/hist/point 0.141371669411541 1
+/gps/hist/point 0.15707963267949 1
+/gps/hist/point 0.172787595947439 1
+/gps/hist/point 0.188495559215388 1
+/gps/hist/point 0.204203522483337 1
+/gps/hist/point 0.219911485751285 1
+/gps/hist/point 0.235619449019234 1
+/gps/hist/point 0.251327412287183 1
+/gps/hist/point 0.267035375555132 1
+/gps/hist/point 0.282743338823081 1
+/gps/hist/point 0.29845130209103 1
+/gps/hist/point 0.314159265358979 1
+/gps/hist/point 0.329867228626928 1
+/gps/hist/point 0.345575191894877 1
+/gps/hist/point 0.361283155162826 1
+/gps/hist/point 0.376991118430775 1
+/gps/hist/point 0.392699081698724 1
+/gps/hist/point 0.408407044966673 1
+/gps/hist/point 0.424115008234622 1
+/gps/hist/point 0.439822971502571 1
+/gps/hist/point 0.45553093477052 1
+/gps/hist/point 0.471238898038469 1
+/gps/hist/point 0.486946861306418 1
+/gps/hist/point 0.502654824574367 1
+/gps/hist/point 0.518362787842316 1
+/gps/hist/point 0.534070751110265 1
+/gps/hist/point 0.549778714378214 1
+/gps/hist/point 0.565486677646163 1
+/gps/hist/point 0.581194640914112 1
+/gps/hist/point 0.596902604182061 1
+/gps/hist/point 0.61261056745001 1
+/gps/hist/point 0.628318530717959 1
+/gps/hist/point 0.644026493985908 1
+/gps/hist/point 0.659734457253857 1
+/gps/hist/point 0.675442420521806 1
+/gps/hist/point 0.691150383789755 1
+/gps/hist/point 0.706858347057704 1
+/gps/hist/point 0.722566310325653 1
+/gps/hist/point 0.738274273593602 1
+/gps/hist/point 0.753982236861551 1
+/gps/hist/point 0.7696902001295 1
+/gps/hist/point 0.785398163397449 1
+/gps/hist/point 0.801106126665398 1
+/gps/hist/point 0.816814089933347 1
+/gps/hist/point 0.832522053201296 1
+/gps/hist/point 0.848230016469245 1
+/gps/hist/point 0.863937979737194 1
+/gps/hist/point 0.879645943005143 1
+/gps/hist/point 0.895353906273092 1
+/gps/hist/point 0.911061869541041 1
+/gps/hist/point 0.92676983280899 1
+/gps/hist/point 0.942477796076939 1
+/gps/hist/point 0.958185759344888 1
+/gps/hist/point 0.973893722612837 1
+/gps/hist/point 0.989601685880786 1
+/gps/hist/point 1.00530964914873 1
+/gps/hist/point 1.02101761241668 1
+/gps/hist/point 1.03672557568463 1
+/gps/hist/point 1.05243353895258 1
+/gps/hist/point 1.06814150222053 1
+/gps/hist/point 1.08384946548848 1
+/gps/hist/point 1.09955742875643 1
+/gps/hist/point 1.11526539202438 1
+/gps/hist/point 1.13097335529233 1
+/gps/hist/point 1.14668131856027 1
+/gps/hist/point 1.16238928182822 1
+/gps/hist/point 1.17809724509617 1
+/gps/hist/point 1.19380520836412 1
+/gps/hist/point 1.20951317163207 1
+/gps/hist/point 1.22522113490002 1
+/gps/hist/point 1.24092909816797 1
+/gps/hist/point 1.25663706143592 1
+/gps/hist/point 1.27234502470387 1
+/gps/hist/point 1.28805298797181 1
+/gps/hist/point 1.30376095123976 1
+/gps/hist/point 1.31946891450771 1
+/gps/hist/point 1.33517687777566 1
+/gps/hist/point 1.35088484104361 1
+/gps/hist/point 1.36659280431156 1
+/gps/hist/point 1.38230076757951 1
+/gps/hist/point 1.39800873084746 1
+/gps/hist/point 1.41371669411541 1
+/gps/hist/point 1.42942465738335 1
+/gps/hist/point 1.4451326206513 1
+/gps/hist/point 1.46084058391925 1
+/gps/hist/point 1.4765485471872 1
+/gps/hist/point 1.49225651045515 1
+/gps/hist/point 1.5079644737231 1
+/gps/hist/point 1.52367243699105 1
+/gps/hist/point 1.539380400259 1
+/gps/hist/point 1.55508836352695 1
+/gps/hist/point 1.57079632679489 1
+
+
+#/gps/hist/file /home/schmitz/sim/HannahTestStand/MuonAngDistDeg30.dat
+
+
+#######################################
+#/gps/position 10 0 9 cm
+#/gps/pos/type Plane
+#/gps/pos/shape Rectangle
+#/gps/pos/halfx 2 cm
+#/gps/pos/halfy 0.5 cm
+#/gps/pos/rot1 0 1 0
+#/gps/pos/rot2 0 0 1
+#/gps/direction -1 0 0
+#####################################
+/gps/particle mu-
+/gps/ene/type Mono
+/gps/ene/mono 4 GeV
+
+/run/fname /media/ryan/Storage/computing/mqFullSim/data/R97/flat/
+/run/beamOn 1
+
+/gps/position -1000 0 0 mm
+/run/beamOn 20000
+
+

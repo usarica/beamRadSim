@@ -1,0 +1,48 @@
+#quick way to get the muon sim to run
+
+/run/initialize
+
+/gps/particle gamma
+/gps/pos/type Plane
+/gps/pos/shape Rectangle
+/gps/pos/centre -1 0 0 cm
+/gps/pos/halfx 25 mm
+/gps/pos/halfy 25 mm
+/gps/pos/rot1 0 1 0
+/gps/pos/rot2 0 0 1
+
+#/gps/ene/type Mono
+#/gps/ene/mono 500 keV
+
+/gps/ene/type Arb
+/gps/hist/type arb
+/gps/hist/point 0.00480701754385965 0.498641818581032
+/gps/hist/point 0.0052280701754386 7.00178619657897
+/gps/hist/point 0.00621052631578947 1
+/gps/hist/point 0.00719298245614035 1
+/gps/hist/point 0.00775438596491227 0.498641818581033
+/gps/hist/point 0.0485263157894737 0.498641818581033
+/gps/hist/point 0.0502807017543859 0.669195212876507
+/gps/hist/point 0.0527368421052631 0.858343126386235
+/gps/hist/point 0.0548421052631578 1.11979893247973
+/gps/hist/point 0.0566666666666666 1.38054046273834
+/gps/hist/point 0.0583508771929824 2.28413810377752
+/gps/hist/point 0.0596140350877193 2.99680494500988
+/gps/hist/point 0.0599649122807017 0.498641818581033
+/gps/hist/inter Log
+
+
+#/gps/hist/point 0 8.83
+#/gps/hist/point 0.0599 8.83
+#/gps/hist/point 0.0601 0.5
+#/gps/hist/point 0.995 0.5
+#/gps/hist/point 1.00 0
+
+/gps/direction -1 0 0
+#/gps/number 10
+
+
+#/run/fname /media/ryan/Storage/computing/beamRadSim/data/60keV1MeVMixed_mixedAbsAuAgScint_5stack/
+/run/fname /media/ryan/Storage/computing/beamRadSim/data/eBremData/gammaDepositPostSteel1cm/
+/run/beamOn 20000000
+#/run/beamOn 10000

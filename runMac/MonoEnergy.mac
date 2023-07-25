@@ -1,0 +1,103 @@
+#===============================================================================
+#
+
+###################################################
+#Setting verbose level
+/control/verbose 0
+/run/verbose 0
+#/tracking/verbose 0
+#/tracking/verbose 1
+/optics_engine/selectOpProcess OpBoundary
+/optics_engine/setOpProcessVerbose 4
+/optics_engine/selectOpProcess Cerenkov 
+/optics_engine/setOpProcessUse False
+/optics_engine/selectOpProcess Scintillation
+/optics_engine/setOpProcessUse False
+/run/initialize
+###################################################
+#Setting display settings
+#/vis/open HepRepFile
+#/vis/open OGLIX 600x600-0+0
+/vis/open DAWNFILE
+#/vis/open VRML2FILE
+/vis/drawVolume
+#/vis/viewer/set/viewpointThetaPhi 45 30 deg
+#/vis/viewer/zoom 15
+
+#/vis/modeling/trajectories/create/drawByParticleID
+#/vis/modeling/trajectories/drawByParticleID-0/set gamma yellow
+#/vis/modeling/trajectories/drawByParticleID-0/set neutron black
+#/vis/modeling/trajectories/drawByParticleID-0/set e+ blue
+#/vis/modeling/trajectories/drawByParticleID-0/set e- blue
+#/vis/modeling/trajectories/drawByParticleID-0/set opticalphoton magenta
+#/vis/modeling/trajectories/drawByParticleID-0/set mu- yellow
+#/vis/modeling/trajectories/drawByParticleID-0/set proton magenta
+#/vis/modeling/trajectories/list
+
+
+#/vis/filtering/trajectories/create/attributeFilter
+#/vis/filtering/trajectories/attributeFilter-0/setAttribute IMag
+#/vis/filtering/trajectories/attributeFilter-0/addInterval 5 MeV 201 TeV
+#/vis/filtering/trajectories/attributeFilter-0/addInterval 2.36 eV 2.3601 eV
+#/vis/filtering/trajectories/create/particleFilter
+#/vis/filtering/trajectories/particleFilter-0/add neutron
+#/vis/filtering/trajectories/particleFilter-0/add mu-
+#/vis/filtering/trajectories/particleFilter-0/add opticalphoton
+#/vis/filtering/trajectories/particleFilter-0/add gamma
+#/vis/filtering/trajectories/particleFilter-0/add e+
+#/vis/filtering/trajectories/particleFilter-0/add e-
+#/vis/filtering/trajectories/particleFilter-0/add proton
+#/vis/filtering/trajectories/particleFilter-0/add ion
+#/vis/filtering/trajectories/particleFilter-0/invert true
+
+##acc. to ApplicationDeveloperHandbook red = x-axis; green = y-axis; blue = z-axis
+#/vis/scene/add/axes 0 0 0 1 cm
+#
+##/tracking/storeTrajectory 2
+/vis/viewer/flush
+/vis/scene/add/trajectories 
+/vis/scene/endOfEventAction accumulate
+#/vis/viewer/flush
+
+
+
+#===============================================================================
+# Set GPS properties
+
+#/gps/particle mu-        
+#
+#/gps/source/intensity 1.
+#
+#/gps/energytype Mono
+#
+#/gps/energy 4 GeV
+#/gps/position 100 0 18.75 mm 
+#/gps/direction -1 0 0 
+
+
+/gps/particle mu-
+/gps/number 1
+/gps/source/intensity 1.
+/gps/energytype Mono
+/gps/energy 4 GeV
+
+
+/gps/direction -1 0 0 // this is cos(alpha) !!! 
+
+
+/gps/pos/type Volume
+/gps/pos/shape Para
+/gps/pos/centre 0 0 0 mm #100 0 18.75 mm 
+/gps/pos/halfy 10 mm
+/gps/pos/halfx 10 mm
+/gps/pos/halfz 10 mm
+
+
+###################################################
+# Start run
+# Restrict photon projection to 15-degree cone (30-deg total sweep).
+# not now
+
+/run/beamOn 1
+
+
