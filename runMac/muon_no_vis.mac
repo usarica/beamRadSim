@@ -12,40 +12,68 @@
 #/vis/drawVolume
 #/vis/viewer/flush
 #/gps/position 900 0 177.3 cm #bar4
-/gps/position 900 0 -10  cm  #midlayermid position in Z is -10 cm
+/gps/position 10 0 0  cm  #midlayermid position in Z is -10 cm
 
 /gps/pos/type Plane
 /gps/pos/shape Rectangle
-/gps/pos/halfx 6 cm         #actually 2.5 cm + 3cm but I am giving some give
-/gps/pos/halfy 50 cm          #actually 40 cm but I am giving some give
+/gps/pos/halfx 5 cm         #actually 2.5 cm + 3cm but I am giving some give
+/gps/pos/halfy 5 cm          #actually 40 cm but I am giving some give
 #/gps/pos/halfy 29.2 cm       #bar at angle
 /gps/pos/rot1 0 1 0
 /gps/pos/rot2 0 0 1
-/gps/direction -1 0 0
+#/gps/direction -1 0 0
+
+#/gps/ang/type iso
+
+/gps/ang/type user
+/gps/hist/type theta
+
+#following Dinh et. al (2003), approximately cos^2 with small correction at high theta
+#truncating at 15 degrees; if you want more of the spectrum, look in specmuon_no_vis.mac 
+/gps/hist/point 0 0
+/gps/hist/point 0.00785398163397448 0.0210885284311375
+/gps/hist/point 0.015707963267949 0.0421671712414926
+/gps/hist/point 0.0235619449019235 0.0632260491482701
+/gps/hist/point 0.0314159265358979 0.0842552955395939
+/gps/hist/point 0.0392699081698724 0.105245062797335
+/gps/hist/point 0.0471238898038469 0.126185528604794
+/gps/hist/point 0.0549778714378214 0.147066902234218
+/gps/hist/point 0.0628318530717959 0.167879430809145
+/gps/hist/point 0.0706858347057703 0.188613405536599
+/gps/hist/point 0.0785398163397448 0.209259167904194
+/gps/hist/point 0.0863937979737193 0.229807115837228
+/gps/hist/point 0.0942477796076938 0.250247709810906
+/gps/hist/point 0.102101761241668 0.270571478912866
+/gps/hist/point 0.109955742875643 0.290769026851227
+/gps/hist/point 0.117809724509617 0.310831037903458
+/gps/hist/point 0.125663706143592 0.330748282801398
+/gps/hist/point 0.133517687777566 0.350511624547834
+/gps/hist/point 0.141371669411541 0.370112024160136
+/gps/hist/point 0.149225651045515 0.389540546336469
+/gps/hist/point 0.15707963267949 0.40878836504024
+/gps/hist/point 0.164933614313464 0.427846768998484
+/gps/hist/point 0.172787595947439 0.446707167109987
+/gps/hist/point 0.180641577581413 0.465361093759045
+/gps/hist/point 0.188495559215388 0.483800214030836
+/gps/hist/point 0.196349540849362 0.502016328824515
+/gps/hist/point 0.204203522483337 0.520001379860188
+/gps/hist/point 0.212057504117311 0.537747454576093
+/gps/hist/point 0.219911485751286 0.555246790912377
+/gps/hist/point 0.22776546738526 0.572491781977994
+/gps/hist/point 0.235619449019235 0.589474980597356
+/gps/hist/point 0.243473430653209 0.606189103733508
+/gps/hist/point 0.251327412287184 0.622627036784682
+/gps/hist/point 0.259181393921158 0.638781837751257
+/gps/hist/point 0.267035375555133 0.654646741270244
+/gps/hist/point 0.274889357189107 0.670215162514565
+/gps/hist/point 0.282743338823082 0
 
 /gps/particle mu-
 /gps/ene/type Mono
 /gps/ene/mono 4 GeV
 
-#/vis/scene/endOfEventAction accumulate 25
-#/tracking/storeTrajectory 1
-#/vis/scene/add/trajectories
-
-#/vis/modeling/trajectories/create/drawByParticleID
-#/vis/modeling/trajectories/drawByParticleID-0/set gamma green
-#/vis/modeling/trajectories/drawByParticleID-0/set neutron magenta
-#/vis/modeling/trajectories/drawByParticleID-0/set e+ blue
-#/vis/modeling/trajectories/drawByParticleID-0/set e- white
-#/vis/modeling/trajectories/drawByParticleID-0/set opticalphoton cyan
-#/vis/modeling/trajectories/drawByParticleID-0/set mu- red
-#/vis/modeling/trajectories/drawByParticleID-0/set proton yellow
-#/vis/modeling/trajectories/list
-
-#/vis/viewer/flush
-
-#/run/fname /media/ryan/Storage/computing/mqBarTestStand/data/Test/
-/run/fname /media/ryan/Storage/computing/mqFullSim/data/muonRockTest/muonLayerMid/
-/run/beamOn 200000
+#/run/fname /some/folder/destination/you/want/the/output/to/go/to
+/run/beamOn 10
 
 
 
