@@ -146,7 +146,7 @@ G4VPhysicalVolume* brDetectorConstruction::SetupGeometry() {
 
 	G4double layerSpacing = 1*mm;
 
-	G4double absThickness1 = 50*um;
+	G4double absThickness1 = 1*cm;
 	G4double absThickness2 = 50*um;
 	G4double absThickness3 = 50*um;
 	G4double absThickness4 = 2000*um;
@@ -161,20 +161,20 @@ G4VPhysicalVolume* brDetectorConstruction::SetupGeometry() {
 	//G4double scintY = 50/2*mm;
 	//G4double scintZ  = 50/2*mm;//(each of these dimensions represents the half-width; e.g. this is 600mm long)
 	G4double scintX = 25.0/2*um;
-	G4double scintY = 50/2*mm;
-	G4double scintZ  = 50/2*mm;//(each of these dimensions represents the half-width; e.g. this is 600mm long)
-	//G4double scintY = 7.8/2*mm;
-	//G4double scintZ  = 7.8/2*mm;//(each of these dimensions represents the half-width; e.g. this is 600mm long)
+	G4double scintY = 6.5/2*cm;
+	G4double scintZ  = 6.5/2*cm;//(each of these dimensions represents the half-width; e.g. this is 600mm long)
 
+	G4double absY = 10.0/2*cm;
+	G4double absZ = 10.0/2*cm;
+
+	G4double SiBulkX = 500.0/2*um;
+	//G4double SiBulkX = 49.0/2/NLAYERS*um;
 	G4double FR4X = 500.0/2*um;
+	G4double MIPCountX = 50.0/2*um;
 	G4double passiveSiX = 150.0/2*um;
-	G4double detX = 50.0*um/2;
-	G4double passiveSiX2 = 150.0/2*um;
-	G4double AlNX=1*mm/2;
-	G4double AlThickness=0.081*25.4*mm/2;
-	//G4double AlThickness=0.25*25.4*mm/2;
-	G4double PbThickness=0.5*cm/2;
-
+	G4double MIPCountDist = 1.0*cm;
+	G4double detX = 50.0/2*um;
+	//G4double detX = 10.0/2*um;
 
 	G4double airGapThickness = 0.1*um; //1*mm
 	G4double wrapThickness = 0.1*um; //3*mm
@@ -196,8 +196,8 @@ G4VPhysicalVolume* brDetectorConstruction::SetupGeometry() {
 	G4double barSpacingXY = 60*mm;
 	//G4double layerSpacing = 1000*mm; 
 	//in visualization this gets swapped, so this is actually 3x2 rather than 2x3
-        G4int nPixelYCount = 6; //number of bars in grid, so this is NxN
-        G4int nPixelZCount = 6; //number of bars in grid, so this is NxN
+        G4int nPixelYCount = 13; //number of bars in grid, so this is NxN
+        G4int nPixelZCount = 13; //number of bars in grid, so this is NxN
 	this->SetNBarPerLayer(nPixelZCount*nPixelYCount);
 	this->SetNLayer(NLAYERS);
  
@@ -222,7 +222,8 @@ G4VPhysicalVolume* brDetectorConstruction::SetupGeometry() {
 
 	G4double steelThickness = 0.5*cm;
 	G4double steelY = scintY*3;
-	G4double steelZ = scintZ*3;
+	G4double steelZ = 10*cm;
+	//G4double steelZ = scintZ*3;
 
 	G4double cuRodRadius = 0.5*2.54*cm;
 	G4double cuSpacing = 5*cm;
@@ -245,7 +246,6 @@ G4VPhysicalVolume* brDetectorConstruction::SetupGeometry() {
 	G4Element* elC = nistMan->FindOrBuildElement("C");
 	G4Element* elO = nistMan->FindOrBuildElement("O");
 	G4Element* elK = nistMan->FindOrBuildElement("K");
-	G4Element* elN = nistMan->FindOrBuildElement("N");
 	G4Element* elNa = nistMan->FindOrBuildElement("Na");
 	G4Element* elSi = nistMan->FindOrBuildElement("Si");
 	G4Element* elAl = nistMan->FindOrBuildElement("Al");
@@ -321,9 +321,6 @@ G4double fractionMass;
  G4Material* SiO2 = new G4Material("SiO2",density= 2.200*g/cm3, numel=2);
  SiO2->AddElement(elSi, natoms=1);
  SiO2->AddElement(elO , natoms=2);
- G4Material* AlN = new G4Material("AlN",density= 3.255*g/cm3, numel=2);
- AlN->AddElement(elAl, natoms=1);
- AlN->AddElement(elN , natoms=1);
  //FR4 (Glass + Epoxy)
  density = 1.86*g/cm3;
  G4Material* FR4 = new G4Material("FR4" , density, numel=2);
@@ -333,82 +330,10 @@ G4double fractionMass;
 
 
 
-////////////////////////////////////////////////////////////////////////////////
-//									     ///
-//				Si Base					     ///
-//									     ///
-////////////////////////////////////////////////////////////////////////////////
-/*
-        G4Box* SiLayer_solid = new G4Box("SiDet_solid",
-                                scintX,
-                                scintY,
-                                scintZ);
 
-        G4LogicalVolume* SiLayer_logic = new G4LogicalVolume(
-                                SiLayer_solid,
-                                //matPlScin,
-                                SiMat,
-                                "SiLayer_logic",
-                                0, 0, 0);
-
-        G4PVPlacement* SiLayer_physic = new G4PVPlacement(
-                        0,
-                        G4ThreeVector(scintX,0,0),
-                        SiLayer_logic,
-                        "SiLayer_physic",
-                        logicWorld,
-                        false,
-                        0,
-                        true);
-*/
-        G4Box* SiDet_solid = new G4Box("SiDet_solid",
-                                detX,
-                                scintY,
-                                scintZ);
-        G4LogicalVolume* SiDet_logic[NLAYERS]; 
-        for(int l=0;l<NLAYERS;l++){
-        SiDet_logic[l] = new G4LogicalVolume(
-                                SiDet_solid,
-                                //matPlScin,
-                                worldMaterial,
-                                "SiDet_logic"+std::to_string(l),
-                                0, 0, 0);
-        }
-
-	G4Box* SiDet_solid_pixel = new G4Box("SiDet_solid_pixel",
-                                detX,
-                                scintY/nPixelYCount,
-                                scintZ/nPixelZCount);
-
-        G4LogicalVolume* SiDet_logic1_pixel = new G4LogicalVolume(
-                                SiDet_solid_pixel,
-                                //matPlScin,
-                                SiMat,
-                                "SiDet_logic_pixel",
-                                0, 0, 0);
-	//150um passive Si
-	G4Box* passiveSi_solid = new G4Box("passiveSi_solid",
-				passiveSiX,
-				scintY,
-				scintZ);
-
-	G4LogicalVolume* passiveSi_logic = new G4LogicalVolume(
-				passiveSi_solid,
-				//matPlScin,
-				SiMat,
-				"passiveSi_logic",
-				0, 0, 0);
-       ///* 
-
-
-        brPixelParameterisation* pixelParam = new brPixelParameterisation(
-                        nPixelYCount,
-                        nPixelZCount,
-                        0,//-detX-FR4X*2, //x offset
-                        scintY/nPixelYCount*2, //YZ spacing
-                        scintY/nPixelYCount, //half-width
-                        scintZ/nPixelZCount //half-length
-	);
+        /////////////////////////////////////////////////////////////////
+	//            Simulates the passive part of the Si detector    //
+	/////////////////////////////////////////////////////////////////
 
 	G4Box* FR4_solid = new G4Box("FR4_solid",
 				FR4X, 
@@ -421,35 +346,92 @@ G4double fractionMass;
 				FR4,
 				"FR4_logic",
 				0, 0, 0);
-	//0.25in of Al
-	G4Box* Al_solid = new G4Box("Al_solid",
-				AlThickness, 
-				0.14*25.4*mm/2,
-				0.14*25.4*mm/2);
+       ///* 
+	//*/
 
-
-	G4LogicalVolume* Al_logic = new G4LogicalVolume(
-				Al_solid,
-				//matPlScin,
-				//worldMaterial,
-				AlMat,
-				//steelMat,
-				"Al_logic",
-				0, 0, 0);
-	//20cm Pb
-	G4Box* Pb_solid = new G4Box("Al_solid",
-				PbThickness, 
+	G4Box* passiveSi_solid = new G4Box("passiveSi_solid",
+				passiveSiX, 
 				scintY,
 				scintZ);
 
-	G4LogicalVolume* Pb_logic = new G4LogicalVolume(
-				Pb_solid,
+	G4LogicalVolume* passiveSi_logic = new G4LogicalVolume(
+				passiveSi_solid,
 				//matPlScin,
-				PbMat,
-				"Pb_logic",
+				SiMat,
+				"passiveSi_logic",
 				0, 0, 0);
        ///* 
-        for(int n=0;n<NLAYERS;n++){
+	G4Box* SiDet_solid = new G4Box("SiDet_solid",
+				detX, 
+				scintY,
+				scintZ);
+	G4LogicalVolume* SiDet_logic[NLAYERS];
+	for(int l=0;l<NLAYERS;l++){
+	SiDet_logic[l] = new G4LogicalVolume(
+				SiDet_solid,
+				//matPlScin,
+				worldMaterial,
+				"SiDet_logic"+std::to_string(l),
+				0, 0, 0);
+	}
+	G4Box* SiDet_solid_pixel = new G4Box("SiDet_solid_pixel",
+				detX, 
+				scintY/nPixelYCount,
+				scintZ/nPixelZCount);
+	
+	G4LogicalVolume* SiDet_logic1_pixel = new G4LogicalVolume(
+				SiDet_solid_pixel,
+				//matPlScin,
+				SiMat,
+				"SiDet_logic_pixel",
+				0, 0, 0);
+
+	G4double layerSeparation = 10*cm;
+	for(int l=0;l<NLAYERS;l++){
+	
+	new G4PVPlacement(
+                        0,
+                        G4ThreeVector(-FR4X-layerSeparation*l,0,0),
+                        //G4ThreeVector(-2*SiBulkX-detX*2-FR4X*2-FR4X-5*um,0,0),
+                        FR4_logic,
+                        "FR4_physic",
+                        logicWorld,
+                        false,
+                        0,
+                        true);
+	
+	new G4PVPlacement(
+                        0,
+                        G4ThreeVector(-FR4X*2-passiveSiX-layerSeparation*l,0,0),
+                        //G4ThreeVector(-2*SiBulkX-detX*2-MIPCountX*2-MIPCountX-5*um,0,0),
+                        passiveSi_logic,
+                        "passiveSi_physic",
+                        logicWorld,
+                        false,
+                        0,
+                        true);
+
+	new G4PVPlacement(
+                        0,
+                        G4ThreeVector(-detX-FR4X*2-passiveSiX*2-layerSeparation*l,0,0),
+                        SiDet_logic[l],
+                        "SiDet_physic"+std::to_string(l),
+                        logicWorld,
+                        false,
+                        l+1,
+                        true);
+	}
+
+        brPixelParameterisation* pixelParam = new brPixelParameterisation(
+                        nPixelYCount,
+                        nPixelZCount,
+                        0,//-detX-FR4X*2, //x offset
+                        scintY/nPixelYCount*2, //YZ spacing
+                        scintY/nPixelYCount, //half-width
+                        scintZ/nPixelZCount //half-length
+			);
+
+	for(int n=0;n<NLAYERS;n++){
         G4PVParameterised* pixelDetParamPhys= new G4PVParameterised("pixelDetParamPhys"+std::to_string(n),
                         SiDet_logic1_pixel,
                         SiDet_logic[n],
@@ -457,82 +439,96 @@ G4double fractionMass;
                         nPixelYCount*nPixelZCount,
                         pixelParam,
                         true); //checking overlaps
-        }
-
-	for(int l=0;l<NLAYERS;l++){
-        new G4PVPlacement(
-                        0,
-                        G4ThreeVector(-2*(detX+passiveSiX+FR4X+AlThickness)*l,0,0),
-                        SiDet_logic[l],
-                        "SiDet_physic"+std::to_string(l),
-                        logicWorld,
-                        false,
-                        l+1,
-                        true);
-	new G4PVPlacement(
-                        0,
-			G4ThreeVector(-detX-passiveSiX-2*(detX+passiveSiX+FR4X+AlThickness)*l,0,0),
-                        passiveSi_logic,
-                        "passiveSi_physic",
-                        logicWorld,
-                        false,
-                        0,
-                        true);
-	new G4PVPlacement(
-                        0,
-                        G4ThreeVector(-detX-passiveSiX*2-FR4X-2*(detX+passiveSiX+FR4X+AlThickness)*l,0,0),
-                        FR4_logic,
-                        "FR4_physic",
-                        logicWorld,
-                        false,
-                        0,
-                        true);
-//	/*
-	new G4PVPlacement(
-                        0,
-			G4ThreeVector(-detX-passiveSiX*2-FR4X*2-AlThickness-2*(detX+passiveSiX+FR4X+AlThickness)*l,0,0),
-                        Al_logic,
-                        "Al_physic",
-                        logicWorld,
-                        false,
-                        0,
-                        true);
-//	*/
-/*
-	if(l==NLAYERS-1){
-		new G4PVPlacement(
-                	        0,
-				G4ThreeVector(-detX-passiveSiX*2-FR4X*2-AlThickness*2-PbThickness-2*(detX+passiveSiX+FR4X+AlThickness)*l,0,0),
-                	        Pb_logic,
-                	        "Pb_physic",
-                	        logicWorld,
-                	        false,
-                	        0,
-                	        true);
-		}
-*/
 	}
+
+	//////////////////// Bulk part of Si //////////////////////////
+	//
+	/////////////////// This can be the quantum device ////////////
+	//
+	///////////////////////////////////////////////////////////////
+
+	G4Box* SiBulk_solid = new G4Box("SiBulk_solid",
+				SiBulkX, 
+				scintY,
+				scintZ);
+
+	G4LogicalVolume* SiBulk_logic[NLAYERS];
+	for(int l=0;l<NLAYERS;l++){
+	SiBulk_logic[l] = new G4LogicalVolume(
+				SiBulk_solid,
+				//matPlScin,
+				worldMaterial,
+				"SiBulk_logic"+std::to_string(l),
+				0, 0, 0);
+	}
+
+	G4Box* SiBulk_solid_pixel = new G4Box("SiBulk_solid_pixel",
+				SiBulkX,
+				scintY,
+				scintZ);
+				//scintY/nPixelYCount,
+				//scintZ/nPixelZCount);
 	
+	G4LogicalVolume* SiBulk_logic1_pixel = new G4LogicalVolume(
+				SiBulk_solid_pixel,
+				//matPlScin,
+				SiMat,
+				"SiBulk_logic_pixel",
+				0, 0, 0);
 
-	//*/
-	//50um LGAD, active layer!
-       ///* 
-////////////////////////////////////////////////////////////////////////////////
-//									     ///
-//	         		Steel Wall				     ///
-//									     ///
-////////////////////////////////////////////////////////////////////////////////
-
-
-//	G4Box* steelWall_solid = new G4Box("steelWall_solid",
-//			steelThickness/2,
-//			steelY,
-//			steelZ);
+	G4double bulkSeparation = 5*cm;
+	for(int l=0;l<NLAYERS;l++){
+	new G4PVPlacement(
+                        0,
+                        G4ThreeVector(NLAYERS*(-detX*2-FR4X*2-passiveSiX*2)-layerSeparation*(NLAYERS-1)-bulkSeparation,0,0),
+                        SiBulk_logic[l],
+                        "SiBulk_physic",
+                        logicWorld,
+                        false,
+                        l+1+NLAYERS,
+                        true);
+	}
+	for(int n=0;n<NLAYERS;n++){
 /*
+	G4PVParameterised* pixelBulkParamPhys= new G4PVParameterised("pixelBulkParamPhys"+std::to_string(n),
+                        SiBulk_logic1_pixel,
+                        SiBulk_logic[n],
+                        kXAxis,
+                        1,
+                        //nPixelYCount*nPixelZCount,
+                        pixelParam,
+                        false); //checking overlaps
+*/
+
+	// This is overkill for a single volume, but it's designed in case you want to pixelize the downstream detector
+	// If so, just need to uncomment the nPixel lines in the above chunks and use the above Placement rather than below
+	
+	new G4PVPlacement(
+                        0,
+                        G4ThreeVector(0,0,0),
+                        SiBulk_logic1_pixel,
+                        "SiBulk_logic1_pixel",
+                        SiBulk_logic[n],
+                        false,
+                        0,
+                        true);	
+	}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//									     ///
+//	         		Steel Wall (could be a cryostat)             ///
+//									     ///
+////////////////////////////////////////////////////////////////////////////////
+
+
+///*
+        G4RotationMatrix *rot = new G4RotationMatrix();
+	rot->rotateY(-90*degree);
 	G4Tubs* steelWall_solid = new G4Tubs("steelWall_solid",
-			10*cm,
-			10*cm+steelThickness,
-			steelZ*10,
+			20*cm,
+			20*cm+steelThickness,
+			steelZ,
 			0*deg,
 			360*deg);
 
@@ -543,248 +539,55 @@ G4double fractionMass;
 			0,0,0);
 
         G4PVPlacement* steelWall_physic = new G4PVPlacement(
-                        0,
-                        G4ThreeVector(12*cm,0,0),
+                        rot,
+                        G4ThreeVector(1*cm,0,0),
                         steelWall_logic,
                         "steelWall_physic",
                         logicWorld,
                         false,
                         0,
                         true);
+/*
+////////////////////////////////////////////////////////////////////////////////
+//									     ///
+//		     Copper Rod (not necesarily in the right spot)	     ///
+//									     ///
+////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////
-//									//
-//			Overall Detector Geometry		     	//
-//									//
-//////////////////////////////////////////////////////////////////////////
+	G4Tubs* cuRod_solid = new G4Tubs("cuRod_solid",
+			0,
+			cuRodRadius,
+			steelZ,
+			0*deg,
+			360*deg);
 
-	G4Box* SiOverall_solid = new G4Box("SiOverall_solid",
-			overallBotX, //using because it's thicker/sure to contain
-			overallY,
-			overallZ);
-
-	G4LogicalVolume* SiOverall_logic = new G4LogicalVolume(
-			SiOverall_solid,
-			worldMaterial,
-			"SiOverall_logic",
+	G4LogicalVolume* cuRod_logic = new G4LogicalVolume(
+			cuRod_solid,
+			CuMat,
+			"CuRod_logic",
 			0,0,0);
 
-        G4PVPlacement* SiOverall_physic = new G4PVPlacement(
-                        0,
-                        G4ThreeVector(-overallBotX-steelThickness,0,0),
-                        SiOverall_logic,
-                        "SiOverall_physic",
-                        logicWorld,
-                        false,
-                        0,
-                        true);
-
-	SiOverall_logic->SetVisAttributes(visAttWorld);
-*/
-/////////////////////////////////////////////////////////////////////////////////
-//                            Wrapping Geometry                                //
-/////////////////////////////////////////////////////////////////////////////////	
-/* //geometry to be used when photocathode is attached to PMT
-	G4Box* wrap_solid_total = new G4Box("wrap_solid_total",
-			wrapXY,
-			wrapXY,
-			wrapZ);
-
-	G4Tubs* wrap_PMT_hole = new G4Tubs("wrap_PMT_hole",
-			0,
-			outerRadius_pmt,
-			(wrapThickness+airGapThickness)/2,
-			0*deg,
-			360*deg);	
-
-//	G4ThreeVector* subVec = new G4ThreeVector(0,0,wrapX-wrapThickness/2);
-	G4RotationMatrix* rot = new G4RotationMatrix();
-	G4SubtractionSolid* wrap_solid = new G4SubtractionSolid("wrap_solid",
-			wrap_solid_total,
-			wrap_PMT_hole,
+	G4PVPlacement* cuRod_physic = new G4PVPlacement(
 			rot,
-			//11 mm is y-axis PMT offset
-			G4ThreeVector(0,0,wrapZ-(airGapThickness+wrapThickness)/2));
-*/
-
-/*
-	G4Box* wrap_solid = new G4Box("wrap_solid",
-			wrapXY,
-			wrapXY,
-			wrapZ);
-
-	G4LogicalVolume* wrap_logic = new G4LogicalVolume(
-			wrap_solid,
-			wrapMat,
-			"wrap_logic",
-			0, 0, 0);
-
-
-	
-	G4PVPlacement* wrap_physic = new G4PVPlacement(
-			0,
-			G4ThreeVector(),
-			wrap_logic,
-			"wrap_physic",
+			G4ThreeVector(cuSpacing,0,0),
+			cuRod_logic,
+			"cuRod_physic",
 			logicWorld,
 			false,
 			0,
 			true);
+
+
 */
-
-	
-/////////////////////////////////////////////////////////////////////////////////
-//                            Air Gap Geometry                                //
-/////////////////////////////////////////////////////////////////////////////////	
-/*
-	G4Box* airgap_solid_total = new G4Box("airgap_solid_total",
-			airgapX,
-			airgapY,
-			airgapZ);
-
-	G4Tubs* airgap_PMT_hole = new G4Tubs("airgap_PMT_hole",
-			0,
-			outerRadius_pmt,
-			airGapThickness/2,
-			0*deg,
-			360*deg);	
-
-	G4RotationMatrix* rot2 = new G4RotationMatrix();
-//	G4ThreeVector* subVec = new G4ThreeVector(0,0,wrapX-wrapThickness/2);
-	G4SubtractionSolid* airgap_solid = new G4SubtractionSolid("airgap_solid",
-			airgap_solid_total,
-			airgap_PMT_hole,
-			rot2,
-			//11 mm is y-axis PMT offset
-			G4ThreeVector(0,pmtYoffset,airgapZ-airGapThickness/2));
-*/
-/*
-	G4Box* airgap_solid = new G4Box("airgap_solid",
-			airgapX,
-			airgapY,
-			airgapZ);
-
-	G4LogicalVolume* airgap_logic = new G4LogicalVolume(
-			airgap_solid,
-			worldMaterial,
-			"airgap_logic",
-			0, 0, 0);
-
-	G4PVPlacement* airgap_physic = new G4PVPlacement(
-			0,
-			G4ThreeVector(),
-			airgap_logic,
-			"airgap_physic",
-			wrap_logic,
-			false,
-			0,
-			true);
-*/	
-/////////////////////////////////////////////////////////////////////////////////
-//                            Scintillator Geometry                                //
-/////////////////////////////////////////////////////////////////////////////////	
-/*
-	G4Box* SiDet_solid = new G4Box("SiDet_solid",
-				scintX, 
-				scintY,
-				scintZ);
-
-	G4LogicalVolume* SiDet_logic1 = new G4LogicalVolume(
-				SiDet_solid,
-				//matPlScin,
-				SiMat,
-				"SiDet_logic1",
-				0, 0, 0);
-
-	G4LogicalVolume* SiDet_logic2 = new G4LogicalVolume(
-				SiDet_solid,
-				//matPlScin,
-				SiMat,
-				"SiDet_logic2",
-				0, 0, 0);
-
-	G4LogicalVolume* SiDet_logic3 = new G4LogicalVolume(
-				SiDet_solid,
-				//matPlScin,
-				SiMat,
-				"SiDet_logic3",
-				0, 0, 0);
-
-	G4LogicalVolume* SiDet_logic4 = new G4LogicalVolume(
-				SiDet_solid,
-				//matPlScin,
-				SiMat,
-				"SiDet_logic4",
-				0, 0, 0);
-
-	G4LogicalVolume* SiDet_logic5 = new G4LogicalVolume(
-				SiDet_solid,
-				//matPlScin,
-				SiMat,
-				"SiDet_logic5",
-				0, 0, 0);
-
-	G4PVPlacement* SiDet_physic1 = new G4PVPlacement(
-			0,
-			G4ThreeVector(2*wrapX*2+4*layerSpacing+absThickness1+absThickness2,0,0),
-			SiDet_logic1,
-			"SiDet_physic1",
-			SiOverall_logic,
-			false,
-			0,
-			true);
-
-	G4PVPlacement* SiDet_physic2 = new G4PVPlacement(
-			0,
-			G4ThreeVector(wrapX*2+2*layerSpacing+absThickness2,0,0),
-			SiDet_logic2,
-			"SiDet_physic2",
-			SiOverall_logic,
-			false,
-			0,
-			true);
-
-	G4PVPlacement* SiDet_physic3 = new G4PVPlacement(
-			0,
-			G4ThreeVector(),
-			SiDet_logic3,
-			"SiDet_physic3",
-			SiOverall_logic,
-			false,
-			0,
-			true);
-
-	G4PVPlacement* SiDet_physic4 = new G4PVPlacement(
-			0,
-			G4ThreeVector(-wrapX*2-2*layerSpacing-absThickness3,0,0),
-			SiDet_logic4,
-			"SiDet_physic4",
-			SiOverall_logic,
-			false,
-			0,
-			true);
-	G4PVPlacement* SiDet_physic5 = new G4PVPlacement(
-			0,
-			G4ThreeVector(-2*wrapX*2-4*layerSpacing-absThickness3-absThickness4,0,0),
-			SiDet_logic5,
-			"SiDet_physic5",
-			SiOverall_logic,
-			false,
-			0,
-			true);
-
-	*/
-
-
-//////////////////////////////////////////////////////////////////////////////////
-//                           Absorber						//
-//////////////////////////////////////////////////////////////////////////////////
-/*
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//             Absorbers. You could position these where you want, make their material whatever you want  //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	G4Box* abs_solid1 = new G4Box("abs_solid1",
 				absThickness1/2,
-				scintY,
-				scintZ);
+				absY,
+				absZ);
+/*
 
 	G4Box* abs_solid2 = new G4Box("abs_solid2",
 				absThickness2/2,
@@ -800,13 +603,13 @@ G4double fractionMass;
 				absThickness4/2,
 				scintY,
 				scintZ);
-
+*/
 	G4LogicalVolume* abs_logic1 = new G4LogicalVolume(
 				abs_solid1,
-				AgMat, //AlMat //absMat
+				CuMat, //AlMat //absMat
 				"abs_logic1",
 				0, 0, 0);
-
+/*
 	G4LogicalVolume* abs_logic2 = new G4LogicalVolume(
 				abs_solid2,
 				AuMat, //CuMat //absMat
@@ -824,23 +627,23 @@ G4double fractionMass;
 				AuMat, //FeMat //absMat
 				"abs_logic4",
 				0, 0, 0);
-
+*/
 	G4PVPlacement* abs_physic1 = new G4PVPlacement(
 			0,
-			G4ThreeVector(3*wrapX+3*layerSpacing+absThickness1/2+absThickness2,0,0),
+			G4ThreeVector(absThickness1/2,0,0),
 			abs_logic1,
 			"abs_physic1",
-			SiOverall_logic,
+			logicWorld,
 			false,
 			0,
 			true);
-	
+/*	
 	G4PVPlacement* abs_physic2 = new G4PVPlacement(
 			0,
 			G4ThreeVector(wrapX+1*layerSpacing+absThickness2/2,0,0),
 			abs_logic2,
 			"abs_physic2",
-			SiOverall_logic,
+			logicWorld,
 			false,
 			0,
 			true);
@@ -850,7 +653,7 @@ G4double fractionMass;
 			G4ThreeVector(-wrapX-1*layerSpacing-absThickness3/2,0,0),
 			abs_logic3,
 			"abs_physic3",
-			SiOverall_logic,
+			logicWorld,
 			false,
 			0,
 			true);
@@ -860,33 +663,7 @@ G4double fractionMass;
 			G4ThreeVector(-3*wrapX-3*layerSpacing-absThickness3-absThickness4/2,0,0),
 			abs_logic4,
 			"abs_physic4",
-			SiOverall_logic,
-			false,
-			0,
-			true);
-*/
-////////////////////////////////////////////////////////////////////////////////
-//			Scintillator High Energy Xray veto		      //
-////////////////////////////////////////////////////////////////////////////////
-
-/*
-	G4Box* scintVeto_solid = new G4Box("scintVeto_solid",
-				scintVetoThickness/2,
-				scintY,
-				scintZ);
-
-	G4LogicalVolume* scintVeto_logic = new G4LogicalVolume(
-				scintVeto_solid,
-				matPlScin,
-				"scintVeto_logic",
-				0, 0, 0);
-
-	G4PVPlacement* scintVeto_physic = new G4PVPlacement(
-			0,
-			G4ThreeVector(-5*wrapX-5*mm-absThickness3-absThickness4-scintVetoThickness/2,0,0),
-			scintVeto_logic,
-			"scintVeto_physic",
-			SiOverall_logic,
+			logicWorld,
 			false,
 			0,
 			true);
@@ -900,12 +677,6 @@ G4double fractionMass;
 	brScintSD* scintSD = new brScintSD(SDnameC);
 	SDman->AddNewDetector ( scintSD );
 	SiDet_logic1->SetSensitiveDetector(scintSD);
-
-	SiDet_logic2->SetSensitiveDetector(scintSD);
-	SiDet_logic3->SetSensitiveDetector(scintSD);
-	SiDet_logic4->SetSensitiveDetector(scintSD);
-	SiDet_logic5->SetSensitiveDetector(scintSD);
-	scintVeto_logic->SetSensitiveDetector(scintSD);
 	//abs_logic->SetSensitiveDetector(scintSD);
 */
    G4String SDnameOfScintDetector = "Scint_SD";
@@ -925,10 +696,6 @@ G4double fractionMass;
 	G4VisAttributes* visAttribAbsAl = new G4VisAttributes(
 			G4Colour::Gray());
 	visAttribAbsAl->SetVisibility(true);
-	
-	G4VisAttributes* visAttribAbsAlN = new G4VisAttributes(
-			G4Colour::Black());
-	visAttribAbsAl->SetVisibility(true);
 
 	G4VisAttributes* visAttribAbsCu = new G4VisAttributes(
 			G4Colour::Red());
@@ -946,176 +713,25 @@ G4double fractionMass;
 			G4Colour::Black());
 	visAttribAbsFe->SetVisibility(true);
 
-/*
-	G4VisAttributes* visAttribSiDetExt = new G4VisAttributes(G4Colour::Cyan());
-	visAttribSiDetExt->SetVisibility(false);
-	
 	G4VisAttributes* visAttribWrapExt = new G4VisAttributes(
 			G4Colour::White());
-	visAttribWrapExt->SetColour(0.5,0.5,0.5,0.3);
+	visAttribWrapExt->SetColour(0.5,0.5,0.5,0.03);
 	visAttribWrapExt->SetVisibility(true);
 
-	G4VisAttributes* visAttribLead = new G4VisAttributes(
-			G4Colour::Black());
-	visAttribLead->SetVisibility(true);
-	
-*/
-/*	abs_logic1->SetVisAttributes(visAttribAbs);
-	abs_logic2->SetVisAttributes(visAttribAbs);
-	abs_logic3->SetVisAttributes(visAttribAbs);
-	abs_logic4->SetVisAttributes(visAttribAbs);
-*/
+	abs_logic1->SetVisAttributes(visAttribAbsCu);
+//	abs_logic2->SetVisAttributes(visAttribAbs);
 
-	//SiLayer_logic->SetVisAttributes(visAttribSiDet);
+	for(int n=0;n<NLAYERS;n++){
+	SiBulk_logic[n]->SetVisAttributes(visAttribSiDet);
+	SiDet_logic[n]->SetVisAttributes(visAttribSiDet);}
+	SiDet_logic1_pixel->SetVisAttributes(visAttribSiDet);
+	SiBulk_logic1_pixel->SetVisAttributes(visAttribSiDet);
+	
 	FR4_logic->SetVisAttributes(visAttribAbsFR4);
-	passiveSi_logic->SetVisAttributes(visAttribAbsCu);
-	for(int l=0;l<NLAYERS;l++) SiDet_logic[l]->SetVisAttributes(visAttribSiDet);
-	for(int l=0;l<NLAYERS;l++) SiDet_logic1_pixel->SetVisAttributes(visAttribSiDet);
-	Al_logic->SetVisAttributes(visAttribAbsAl);
-	Pb_logic->SetVisAttributes(visAttribAbsFe);
-/*
-	abs_logic1->SetVisAttributes(visAttribAbsAl);
-	abs_logic2->SetVisAttributes(visAttribAbsCu);
-	abs_logic3->SetVisAttributes(visAttribAbsNi);
-	abs_logic4->SetVisAttributes(visAttribAbsFe);
-	SiDet_logic1->SetVisAttributes(visAttribSiDet);
-	SiDet_logic2->SetVisAttributes(visAttribSiDet);
-	SiDet_logic3->SetVisAttributes(visAttribSiDet);
-	SiDet_logic4->SetVisAttributes(visAttribSiDet);
-	SiDet_logic5->SetVisAttributes(visAttribSiDet);
-	scintVeto_logic->SetVisAttributes(visAttribSiDet);
-
-	cuRod_logic->SetVisAttributes(visAttribAbsCu);
-	steelWall_logic->SetVisAttributes(visAttribAbsNi);
-*/
-////////////////////////////////////////////////////////////////////////////
-
-/*//////////////////////////////////////////////////////////////////////////////////////////////////////
-*/
-	 //the "photocathode" is a metal slab at the front of the glass that
-	 //is only an approximation of the real thing since it only
-	 //absorbs or detects the photons based on the efficiency set
-
-//////////////////// moving placement of phCathSolid from PMT to the      ////////////////////////
-//////////////////// Pixel volume s.t. there are no logical volume overlaps ///////////////////////
-
-   //sensitive detector is not actually on the photocathode.
-   //processHits gets done manually by the stepping action.
-   //It is used to detect when photons hit and get absorbed&detected at the
-   //boundary to the photocathode (which doesnt get done by attaching it to a
-   //logical volume.
-   //It does however need to be attached to something or else it doesnt get
-   //reset at the begining of events
-   //==========================================================================
-   //---------------PMT Sensitive Detector---------------
-   //==========================================================================
-	
-	/*
-	G4String SDnameOfPMTDetector = "PMT_SD";
-   brPMTSD* myPMTSD = new brPMTSD(SDnameOfPMTDetector);
-
-   G4SDManager::GetSDMpointer()->AddNewDetector(myPMTSD);
-	myPMTSD->InitPMTs(nbAllPmts);
-	myPMTSD->SetR878_QE(GetPMTEff_R878());
-	myPMTSD->SetR7725_QE(GetPMTEff_R7725());
-	myPMTSD->SetET9814B_QE(GetPMTEff_ET9814B());
-	phCathLog->SetSensitiveDetector(myPMTSD); //change HERE for PMT Scenario
-//  	G4ThreeVector PMTPosition1 = G4ThreeVector(0,pmtYoffset,scintZ+height_pmt/2+(nLayers-1)*layerSpacing/2);
-  //  	G4RotationMatrix rotm1  = G4RotationMatrix();//(G4ThreeVector(0, -1., 0. ), pi / 2.0);
-//	G4Transform3D transform = G4Transform3D(rotm1,PMTPosition1);
-*/
-/*
-	G4PVPlacement* pmtPhys = new G4PVPlacement(transform,   //rotation,position
-			                     pmtLog,                   //its logical volume
-			                     "pmt_physic",                //its name
-			                     logicWorld,              //its mother  volume
-			                     false,                    //no boolean operation
-			                     nbAllPmts,             //copy number
-			                     true);           //checking overlaps
-*/
-/*
-	// visual attributes for all PMTs;
-	G4VisAttributes* visAttribPMT = new G4VisAttributes(G4Colour::Blue());
-	visAttribPMT->SetForceWireframe(false);
-	visAttribPMT->SetForceSolid(true);
-	visAttribPMT->SetVisibility(true);
-
-	//setting same color so it doesn't look bad in isometric view
-	
-	//G4VisAttributes* visAttribPhCath = new G4VisAttributes(G4Colour::Blue());
-	G4VisAttributes* visAttribPhCath = new G4VisAttributes(G4Colour::Red());
-	visAttribPhCath->SetForceWireframe(false);
-	visAttribPhCath->SetForceSolid(false);
-	visAttribPhCath->SetVisibility(true);
-
-	pmtLog->SetVisAttributes(visAttribPMT);
-	phCathLog->SetVisAttributes(visAttribPhCath);
-*/
-	//==============================================================================
-	// Optical Surfaces
-	//==============================================================================
-	// Optical Properties
-	// Note that, as mentioned in HyperNews posts and the G4AppDev Guide, the definition
-	// of a logical bordfer surface involves a ordered pair of materials, such that
-	// despite there being no clearly defined structure/class in the prototpye, the
-	// order in which the surfaces are listed defines the orientation of the surface;
-	// particles "see" this surface only when traveling from the first listed physical
-	// volume into the second, which is why I have created a pair of complementary
-	// surfaces for every interface (producing identical, bidirectional interactions).
+	steelWall_logic->SetVisAttributes(visAttribWrapExt);
+//	cuRod_logic->SetVisAttributes(visAttribAbsCu);
 
 
-//    G4OpticalSurface* opSDielectricBiAlkali = new G4OpticalSurface("Detector", unified,
-//                                                    polished, dielectric_metal);
-    //////////////////
-//    G4MaterialPropertiesTable* mtphcath =  matBiAlkali->GetMaterialPropertiesTable();
-//    opSDielectricBiAlkali->SetMaterialPropertiesTable(mtphcath);
-//    opSDielectricBiAlkali->SetMaterialPropertiesTable(SetOpticalPropertiesOfPMT());
-
-//    G4OpticalSurface* opSWrapScintillator = new G4OpticalSurface("Wrapping", unified,
-//                              /*ground*/      groundteflonair,
-//                                                dielectric_metal);
-//	const G4int nEntriesWrap = 2;
-//	G4double photonEnergyWrap[nEntriesWrap]={ 1.5 * eV,6.3 * eV};
-//	G4double wrap_REFL[nEntriesWrap] = {wrapRefl,wrapRefl};//{0.95,0.95}
-//	G4double wrap_RIND[nEntriesWrap];
-
-//	G4MaterialPropertiesTable* mptWrap = new G4MaterialPropertiesTable();
-	//mptWrap->AddProperty("TRANSMITTANCE",photonEnergyWrap, foil_REFL, nEntriesWrap);//->SetSpline(true);
-//	mptWrap->AddProperty("REFLECTIVITY",photonEnergyWrap, wrap_REFL, nEntriesWrap);
-    
-//    opSWrapScintillator->SetMaterialPropertiesTable(mptWrap);
-
-//define optical surfaces for each object in the sim, and match the optical properties of each surface to it
-
-//    new G4LogicalSkinSurface("Wrap", wrap_logic, opSWrapScintillator);
-//    new G4LogicalSkinSurface("PhCath", phCathLog, opSDielectricBiAlkali);
-
-//Connect detector volume (photocathode) to each surface which is in contact with it
-// use this if you want to explicitly define the allowed optical surfaces rather than a wrapping
-//        new G4LogicalBorderSurface("Glass->PhCath",
-//			pmtPhys,phCathPhys,opSDielectricBiAlkali);
-//			PMTParam_phys,phCathPhys,opSDielectricBiAlkali);
-
-//	new G4LogicalBorderSurface("PhCath->Glass",
-//			phCathPhys,pmtPhys,opSDielectricBiAlkali);
-//			phCathPhys,PMTParam_phys,opSDielectricBiAlkali);
-/*
-    new G4LogicalBorderSurface("Scinti->PhCath",
-			barParamPhys[0], PMTParamPhys[0] ,opSDielectricBiAlkali);
-			//SiDet_physic, phCathPhys ,opSDielectricBiAlkali);
-
-    new G4LogicalBorderSurface("PhCath->Scinti",
-    			PMTParamPhys[0] ,barParamPhys[0] ,opSDielectricBiAlkali);
-    			//phCathPhys ,SiDet_physic ,opSDielectricBiAlkali);
-*/
-/*
-    new G4LogicalBorderSurface("AirGap->PhCath",
-			airgap_physic, phCathPhys ,opSDielectricBiAlkali);
-
-    new G4LogicalBorderSurface("PhCath->AirGap",
-    			phCathPhys ,airgap_physic ,opSDielectricBiAlkali);
-*/
-//*/
     return physicWorld;
 
 }
@@ -1138,11 +754,11 @@ G4MaterialPropertiesTable* mptPlScin = new G4MaterialPropertiesTable();
 	G4double pEnergy;
 	G4double pWavelength;
 	G4double pSEff;
-	ReadEJ200.open("/media/schmitz/Storage/computing/beamRadSim/OpticalData/EJ200ScintSpectrum.txt");
+	ReadEJ200.open("/media/schmitz/Storage/computing/cryoSim/beamRadSim/OpticalData/EJ200ScintSpectrum.txt");
 	if(ReadEJ200.is_open()){
 	while(!ReadEJ200.eof()){
 	ReadEJ200 >> pWavelength >> pSEff;
-	pEnergy = (1240/pWavelength)*eV;
+	pEnergy = (1240.0/pWavelength)*eV;
 	photonEnergy[ScintEntry] = pEnergy;
 	EJ200_SCINT[ScintEntry] = pSEff;
 	G4cout << "read-in energy scint: " << photonEnergy[ScintEntry] << " eff: " << EJ200_SCINT[ScintEntry] << G4endl;
@@ -1192,7 +808,7 @@ G4MaterialPropertiesTable* brDetectorConstruction::SetOpticalPropertiesOfPMT(){
 	G4double pEnergy;
 	G4double pWavelength;
 	G4double pQEff;
-	ReadPMTQEff.open("/media/schmitz/Storage/computing/beamRadSim/OpticalData/PMT_R878_QE_orig.txt");
+	ReadPMTQEff.open("/media/schmitz/Storage/computing/cryoSim/beamRadSim/OpticalData/PMT_R878_QE_orig.txt");
 	if(ReadPMTQEff.is_open()){
 	while(!ReadPMTQEff.eof()){
 	ReadPMTQEff >> pWavelength >> pQEff;
@@ -1229,7 +845,7 @@ G4MaterialPropertiesTable* brDetectorConstruction::SetOpticalPropertiesOfPMT(){
 G4PhysicsVector brDetectorConstruction::GetPMTEff_R878(){
 	
 	std::ifstream ReadPMTQEff;
-	ReadPMTQEff.open("/media/schmitz/Storage/computing/beamRadSim/OpticalData/PMT_R878_QE.txt");
+	ReadPMTQEff.open("/media/schmitz/Storage/computing/cryoSim/beamRadSim/OpticalData/PMT_R878_QE.txt");
 	G4PhysicsVector effVec;
 	effVec.Retrieve(ReadPMTQEff,true);
 	if (effVec.GetVectorLength()!=0) G4cout << "Quantum Efficiency successfully retrieved for PMT_R878_QE" << G4endl;
@@ -1240,7 +856,7 @@ G4PhysicsVector brDetectorConstruction::GetPMTEff_R878(){
 G4PhysicsVector brDetectorConstruction::GetPMTEff_R7725(){
 	
 	std::ifstream ReadPMTQEff;
-	ReadPMTQEff.open("/media/schmitz/Storage/computing/beamRadSim/OpticalData/PMT_R7725_QE.txt");
+	ReadPMTQEff.open("/media/schmitz/Storage/computing/cryoSim/beamRadSim/OpticalData/PMT_R7725_QE.txt");
 	G4PhysicsVector effVec;
 	effVec.Retrieve(ReadPMTQEff,true);
 	if (effVec.GetVectorLength()!=0) G4cout << "Quantum Efficiency successfully retrieved for PMT R7725" << G4endl;
@@ -1251,7 +867,7 @@ G4PhysicsVector brDetectorConstruction::GetPMTEff_R7725(){
 G4PhysicsVector brDetectorConstruction::GetPMTEff_ET9814B(){
 	
 	std::ifstream ReadPMTQEff;
-	ReadPMTQEff.open("/media/schmitz/Storage/computing/beamRadSim/OpticalData/PMT_ET9814B_QE.txt");
+	ReadPMTQEff.open("/media/ryan/Storage/computing/cryoSim/beamRadSim/OpticalData/PMT_ET9814B_QE.txt");
 	G4PhysicsVector effVec;
 	effVec.Retrieve(ReadPMTQEff,true);
 	if (effVec.GetVectorLength()!=0) G4cout << "Quantum Efficiency successfully retrieved for PMT ET9814B" << G4endl;
