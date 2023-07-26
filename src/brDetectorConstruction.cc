@@ -196,8 +196,8 @@ G4VPhysicalVolume* brDetectorConstruction::SetupGeometry() {
 	G4double barSpacingXY = 60*mm;
 	//G4double layerSpacing = 1000*mm; 
 	//in visualization this gets swapped, so this is actually 3x2 rather than 2x3
-        G4int nPixelYCount = 13; //number of bars in grid, so this is NxN
-        G4int nPixelZCount = 13; //number of bars in grid, so this is NxN
+        G4int nPixelYCount = 10; //number of bars in grid, so this is NxN
+        G4int nPixelZCount = 10; //number of bars in grid, so this is NxN
 	this->SetNBarPerLayer(nPixelZCount*nPixelYCount);
 	this->SetNLayer(NLAYERS);
  
@@ -485,7 +485,7 @@ G4double fractionMass;
                         "SiBulk_physic",
                         logicWorld,
                         false,
-                        l+1+NLAYERS,
+                        10,
                         true);
 	}
 	for(int n=0;n<NLAYERS;n++){

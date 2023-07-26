@@ -395,6 +395,7 @@ void brSteppingAction::UserSteppingAction(const G4Step * theStep){
 	////// yeah this should probably be a switch statement. I forget what's the least expensive way, will fix later
 	if(myStartVolumeName.contains("pixel")){ //si detector
 		G4String sdScintName="Scint_SD";
+		//G4cout << myStartVolumeName << G4endl;
                 brScintSD* scintSD = (brScintSD*)G4SDManager::GetSDMpointer()->FindSensitiveDetector(sdScintName);
                 scintSD->ProcessHits2(theStep,NULL);
 	}
