@@ -71,7 +71,7 @@
 #include "G4UImanager.hh"
 
 const G4int NLAYERS = 1; //number of layers in detector. Up here since it defines an array
-
+const G4String brOpticalFilePath = "../OpticalData/";
 //==============================================================================
 brDetectorConstruction::brDetectorConstruction() :
     verbose(1)//,solidWorld(0), logicWorld(0), physicWorld(0)
@@ -196,8 +196,8 @@ G4VPhysicalVolume* brDetectorConstruction::SetupGeometry() {
 	G4double barSpacingXY = 60*mm;
 	//G4double layerSpacing = 1000*mm; 
 	//in visualization this gets swapped, so this is actually 3x2 rather than 2x3
-        G4int nPixelYCount = 13; //number of bars in grid, so this is NxN
-        G4int nPixelZCount = 13; //number of bars in grid, so this is NxN
+        G4int nPixelYCount = 10; //number of bars in grid, so this is NxN
+        G4int nPixelZCount = 10; //number of bars in grid, so this is NxN
 	this->SetNBarPerLayer(nPixelZCount*nPixelYCount);
 	this->SetNLayer(NLAYERS);
  
@@ -485,7 +485,7 @@ G4double fractionMass;
                         "SiBulk_physic",
                         logicWorld,
                         false,
-                        l+1+NLAYERS,
+                        10,
                         true);
 	}
 	for(int n=0;n<NLAYERS;n++){
@@ -754,7 +754,7 @@ G4MaterialPropertiesTable* mptPlScin = new G4MaterialPropertiesTable();
 	G4double pEnergy;
 	G4double pWavelength;
 	G4double pSEff;
-	ReadEJ200.open("/media/schmitz/Storage/computing/cryoSim/beamRadSim/OpticalData/EJ200ScintSpectrum.txt");
+	ReadEJ200.open(brOpticalFilePath+"EJ200ScintSpectrum.txt");
 	if(ReadEJ200.is_open()){
 	while(!ReadEJ200.eof()){
 	ReadEJ200 >> pWavelength >> pSEff;
@@ -808,7 +808,7 @@ G4MaterialPropertiesTable* brDetectorConstruction::SetOpticalPropertiesOfPMT(){
 	G4double pEnergy;
 	G4double pWavelength;
 	G4double pQEff;
-	ReadPMTQEff.open("/media/schmitz/Storage/computing/cryoSim/beamRadSim/OpticalData/PMT_R878_QE_orig.txt");
+	ReadPMTQEff.open(brOpticalFilePath+"PMT_R878_QE_orig.txt");
 	if(ReadPMTQEff.is_open()){
 	while(!ReadPMTQEff.eof()){
 	ReadPMTQEff >> pWavelength >> pQEff;
@@ -845,7 +845,7 @@ G4MaterialPropertiesTable* brDetectorConstruction::SetOpticalPropertiesOfPMT(){
 G4PhysicsVector brDetectorConstruction::GetPMTEff_R878(){
 	
 	std::ifstream ReadPMTQEff;
-	ReadPMTQEff.open("/media/schmitz/Storage/computing/cryoSim/beamRadSim/OpticalData/PMT_R878_QE.txt");
+	ReadPMTQEff.open(brOpticalFilePath+"PMT_R878_QE.txt");
 	G4PhysicsVector effVec;
 	effVec.Retrieve(ReadPMTQEff,true);
 	if (effVec.GetVectorLength()!=0) G4cout << "Quantum Efficiency successfully retrieved for PMT_R878_QE" << G4endl;
@@ -856,7 +856,7 @@ G4PhysicsVector brDetectorConstruction::GetPMTEff_R878(){
 G4PhysicsVector brDetectorConstruction::GetPMTEff_R7725(){
 	
 	std::ifstream ReadPMTQEff;
-	ReadPMTQEff.open("/media/schmitz/Storage/computing/cryoSim/beamRadSim/OpticalData/PMT_R7725_QE.txt");
+	ReadPMTQEff.open(brOpticalFilePath+"PMT_R7725_QE.txt");
 	G4PhysicsVector effVec;
 	effVec.Retrieve(ReadPMTQEff,true);
 	if (effVec.GetVectorLength()!=0) G4cout << "Quantum Efficiency successfully retrieved for PMT R7725" << G4endl;
@@ -867,7 +867,7 @@ G4PhysicsVector brDetectorConstruction::GetPMTEff_R7725(){
 G4PhysicsVector brDetectorConstruction::GetPMTEff_ET9814B(){
 	
 	std::ifstream ReadPMTQEff;
-	ReadPMTQEff.open("/media/ryan/Storage/computing/cryoSim/beamRadSim/OpticalData/PMT_ET9814B_QE.txt");
+	ReadPMTQEff.open(brOpticalFilePath+"PMT_ET9814B_QE.txt");
 	G4PhysicsVector effVec;
 	effVec.Retrieve(ReadPMTQEff,true);
 	if (effVec.GetVectorLength()!=0) G4cout << "Quantum Efficiency successfully retrieved for PMT ET9814B" << G4endl;
